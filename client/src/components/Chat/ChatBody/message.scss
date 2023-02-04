@@ -1,0 +1,47 @@
+@use '../../../App.scss' as *;
+
+.message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  & img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__text {
+    padding: 8px 12px;
+    border-radius: 20px;
+    background-color: $gray__400;
+    width: fit-content;
+    max-width: 40vw;
+  }
+
+  &.your__message {
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+  }
+
+  &__time {
+    font-size: 1.2rem;
+  }
+}
+
+.your__message {
+  & .message__text {
+    background-color: $blue__500;
+    color: #fff;
+  }
+
+  & .message__wrapper {
+    align-items: flex-end;
+  }
+}

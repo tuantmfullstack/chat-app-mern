@@ -1,0 +1,159 @@
+@use '../../App.scss' as *;
+
+.auth {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dee2e6;
+
+  &__wrapper {
+    width: 40vw;
+    height: fit-content;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 40px 32px;
+
+    &.signup {
+      padding: 20px 32px;
+    }
+
+    &.info {
+      width: 50vw;
+    }
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 28px;
+  }
+
+  .signup &__group {
+    margin: 0 0 12px;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 3.2rem;
+    color: $blue__500;
+  }
+
+  &__desc {
+    opacity: 0.8;
+  }
+
+  &__fail {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #aaa;
+  }
+
+  &__emphasize {
+    color: $blue__700;
+    text-decoration: underline;
+  }
+}
+
+.form__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  & label {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  & input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    outline: 0;
+    font-size: 1.4rem;
+    border-radius: 8px;
+  }
+}
+
+.btn {
+  padding: 8px;
+  background-color: $blue__700;
+  outline: 0;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  width: 100%;
+  margin-top: 8px;
+  font-size: 1.6rem;
+  color: #fff;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.forgot__password {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.form__info {
+  display: flex;
+  gap: 64px;
+  justify-content: center;
+  align-items: center;
+}
+
+.info__img {
+  width: 200px;
+  height: 200px;
+
+  &__wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}
+
+.info__file {
+}
+
+.file__label {
+  background-color: $blue__600;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  transition: all ease 0.25s;
+  opacity: 0;
+  border: 0;
+  padding: 12px 0 0 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.info__img__wrapper:hover .file__label {
+  height: 60px;
+  opacity: 1;
+}
+
+.back__to__home {
+  text-align: center;
+  text-decoration: underline;
+  margin-top: 16px;
+}

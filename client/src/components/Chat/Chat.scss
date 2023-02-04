@@ -1,0 +1,43 @@
+@use '../../App.scss' as *;
+
+.chat {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+
+  &__wrapper {
+    flex: 1;
+  }
+}
+
+.chatbar {
+  width: 20vw;
+  background-color: $gray__100;
+}
+
+.chatBody {
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.chatFooter {
+  height: 10vh;
+  background-color: $gray__100;
+}
+
+.chatUser {
+  background-color: $gray__100;
+  height: 100vh;
+}
+
+.choose__conversation {
+  font-size: 3.2rem;
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+  }
+}

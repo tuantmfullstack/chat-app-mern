@@ -1,0 +1,36 @@
+/* RESET CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// COLORS:
+
+$blue__100: #d0ebff;
+$blue__200: #a5d8ff;
+$blue__300: #74c0fc;
+$blue__400: #4dabf7;
+$blue__500: #339af0;
+$blue__600: #228be6;
+$blue__700: #1c7ed6;
+$blue__800: #1971c2;
+$gray__100: #f1f3f5;
+$gray__300: #dee2e6;
+$gray__400: #ced4da;
+$gray__500: #adb5bd;
+$gray__600: #868e96;

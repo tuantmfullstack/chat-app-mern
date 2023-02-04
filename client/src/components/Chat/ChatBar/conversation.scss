@@ -1,0 +1,28 @@
+@use '../../../App.scss' as *;
+
+.conversation {
+  display: flex;
+  padding: 4px 12px 4px 4px;
+  align-items: center;
+  background-color: #fff;
+  margin-bottom: 12px;
+  gap: 12px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+
+  &:hover {
+    background-color: $gray__300;
+    cursor: pointer;
+  }
+
+  & img {
+    width: 40px;
+    height: 40px;
+  }
+
+  &__name {
+    // width: fit-content;
+    max-width: 100px;
+  }
+}

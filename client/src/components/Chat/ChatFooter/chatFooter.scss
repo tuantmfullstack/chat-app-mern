@@ -1,0 +1,30 @@
+.chatFooter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  & input {
+    outline: 0;
+    border: 0;
+    padding: 12px;
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.btn.send__btn {
+  width: fit-content;
+  border-radius: 12px;
+  margin: 0;
+  padding: 8px 16px;
+  margin-right: 8px;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
