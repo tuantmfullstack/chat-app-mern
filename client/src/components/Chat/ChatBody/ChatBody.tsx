@@ -30,8 +30,6 @@ const ChatBody = ({}: Props) => {
   const [arrivalMessage, setArrivalMessage] = useState<MessageI>();
   const isContinue = useSelector(isContinueSelector);
 
-  console.log({ messages });
-
   useEffect(() => {
     if (messSelector) setMessages([...messSelector]);
   }, [messSelector]);
@@ -66,17 +64,20 @@ const ChatBody = ({}: Props) => {
       { threshold: 1 }
     );
 
-    observer.observe(buttonRef.current!);
+    if (buttonRef.current) {
+      observer.observe(buttonRef.current);
+    }
 
     return () => {
-      observer.unobserve(buttonRef.current!);
+      if (buttonRef.current) {
+        observer.unobserve(buttonRef.current);
+      }
     };
   }, [num, conversation]);
 
   useEffect(() => {
     socket.on('getMessage', (message: MessageI) => {
       setArrivalMessage(message);
-      console.log(message);
     });
   }, []);
 

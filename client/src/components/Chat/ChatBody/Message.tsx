@@ -1,6 +1,10 @@
 import { format } from 'timeago.js';
 import './message.scss';
-import { userIdSelector } from '../../../store/selectors';
+import {
+  userIdSelector,
+  userSelector,
+  conversationSelector,
+} from '../../../store/selectors';
 import { useSelector } from 'react-redux';
 
 interface Props {
@@ -11,13 +15,18 @@ interface Props {
 
 const Message = ({ senderId, text, createdAt }: Props) => {
   const currentUserId = useSelector(userIdSelector)!;
+  const currentUser = useSelector(userSelector);
+  const conSelector = useSelector(conversationSelector);
+  const isOwner = senderId === currentUserId;
 
   return (
-    <div
-      className={`message ${senderId === currentUserId ? '' : 'your__message'}`}
-    >
+    <div className={`message ${isOwner ? '' : 'your__message'}`}>
       <img
-        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgSmojUgwjIB87c4Q0hLCAyl__oiTySWGWJUZtUNHlHjBALLzTsu_vMHYMaEwLts4QEoo&usqp=CAU'
+        src={
+          isOwner
+            ? conSelector?.senderId?.avatar
+            : conSelector?.receiverId?.avatar
+        }
         alt=''
       />
       <div className='message__wrapper'>
