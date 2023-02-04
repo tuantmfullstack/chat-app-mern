@@ -2,6 +2,7 @@ import './conversation.scss';
 import { useAppDispatch } from '../../../store/store';
 import chatBarSlice from '../../../store/chatBarSlice';
 import { ConversationI } from '../../../store/type';
+import chatBodySlice from '../../../store/chatBodySlice';
 
 interface Props {
   name: string;
@@ -12,6 +13,7 @@ interface Props {
 const Conversation = ({ name, img, conversation }: Props) => {
   const dispatch = useAppDispatch();
   const conversationHandler = () => {
+    dispatch(chatBodySlice.actions.resetMessages());
     dispatch(chatBarSlice.actions.changeConversation(conversation));
   };
 

@@ -1,24 +1,21 @@
-import Message from './Message';
-import './chatBody.scss';
-import chatBodySlice from '../../../store/chatBodySlice';
-import { socket } from '../Chat';
-import {
-  UIEventHandler,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { getMessagesThunk } from '../../../store/chatBodySlice';
 import {
-  isLoginSelector,
   conversationSelector,
+  isContinueSelector,
+  isLoginSelector,
+  messagesSelector,
 } from '../../../store/selectors';
 import { useAppDispatch } from '../../../store/store';
-import { getMessagesThunk } from '../../../store/chatBodySlice';
-import { ConversationI, MessageI } from '../../../store/type';
-import { messagesSelector } from '../../../store/selectors';
+import { ConversationI, General, MessageI } from '../../../store/type';
+import { socket } from '../Chat';
 import './chatBody.scss';
+import Message from './Message';
+import Spinner from './Spinner';
+import chatBodySlice from '../../../store/chatBodySlice';
+
+let num = 0;
 
 interface Props {}
 
@@ -27,10 +24,13 @@ const ChatBody = ({}: Props) => {
   const dispatch = useAppDispatch();
   const conSelector = useSelector(conversationSelector);
   const messSelector = useSelector(messagesSelector);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [conversation, setConversation] = useState<ConversationI>();
-  const [messages, setMessages] = useState<MessageI[]>([]);
+  const [messages, setMessages] = useState<General[]>([]);
   const [arrivalMessage, setArrivalMessage] = useState<MessageI>();
-  // const endRef = useRef<HTMLDivElement>(null);
+  const isContinue = useSelector(isContinueSelector);
+
+  console.log({ messages });
 
   useEffect(() => {
     if (messSelector) setMessages([...messSelector]);
@@ -39,19 +39,9 @@ const ChatBody = ({}: Props) => {
   useEffect(() => {
     if (conSelector !== null) {
       setConversation({ ...conSelector! });
+      num = 0;
     }
   }, [conSelector]);
-
-  useEffect(() => {
-    if (isLogin && conversation) {
-      dispatch(getMessagesThunk(conversation!._id));
-    }
-  }, [isLogin, conversation]);
-
-  // useEffect(() => {
-  //   // endRef.current!.scrollIntoView({ behavior: 'smooth' });
-  //   endRef.current!.scrollIntoView();
-  // }, [messages]);
 
   useEffect(() => {
     if (
@@ -59,28 +49,52 @@ const ChatBody = ({}: Props) => {
       conversation?._id &&
       arrivalMessage.conversationId === conversation._id
     ) {
-      setMessages((prev) => [...prev, arrivalMessage]);
+      dispatch(chatBodySlice.actions.addingMessage(arrivalMessage));
     }
   }, [arrivalMessage, conversation]);
 
   useEffect(() => {
+    let observer = new IntersectionObserver(
+      (entries: any) => {
+        if (entries[0].isIntersecting && conversation && isContinue) {
+          dispatch(
+            getMessagesThunk({ conversationId: conversation._id, skip: num })
+          );
+          num += 10;
+        }
+      },
+      { threshold: 1 }
+    );
+
+    observer.observe(buttonRef.current!);
+
+    return () => {
+      observer.unobserve(buttonRef.current!);
+    };
+  }, [num, conversation]);
+
+  useEffect(() => {
     socket.on('getMessage', (message: MessageI) => {
       setArrivalMessage(message);
+      console.log(message);
     });
   }, []);
 
   return (
     <div className='chatBody'>
-      {messages.map((message) => (
-        <Message
-          key={message._id}
-          senderId={message.senderId}
-          text={message.text}
-          createdAt={message.createdAt}
-        />
+      {messages?.map((messageWrapper) => (
+        <div key={messageWrapper.id} className='reverse'>
+          {messageWrapper?.data?.map((message) => (
+            <Message
+              key={message._id}
+              senderId={message.senderId}
+              text={message.text}
+              createdAt={message.createdAt}
+            />
+          ))}
+        </div>
       ))}
-      <button>See more</button>
-      {/* <div className='endRef' ref={endRef} /> */}
+      <button ref={buttonRef}>{isContinue ? <Spinner /> : ''}</button>
     </div>
   );
 };

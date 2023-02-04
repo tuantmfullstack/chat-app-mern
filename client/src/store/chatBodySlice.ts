@@ -3,16 +3,22 @@ import { ChatBodyStateI } from './type';
 import instance from '../utils/axiosConfig';
 import handleThunk from '../utils/HandleThunk';
 
+interface DataI {
+  conversationId: string;
+  skip: number;
+}
+
 const initialState: ChatBodyStateI = {
   isLoading: false,
+  isContinue: true,
   messages: [],
   err: false,
 };
 
 export const getMessagesThunk = createAsyncThunk(
   'getMessagesThunk',
-  (conversationId: string, { rejectWithValue }) => {
-    const fn = instance.get(`messages/${conversationId}`);
+  ({ conversationId, skip }: DataI, { rejectWithValue }) => {
+    const fn = instance.get(`messages/${conversationId}?skip=${skip}&limit=10`);
     return handleThunk(fn, rejectWithValue);
   }
 );
@@ -22,7 +28,13 @@ const chatBodySlice = createSlice({
   initialState,
   reducers: {
     addingMessage: (state, { payload }) => {
-      state.messages.push(payload);
+      state.messages[0].data = [payload, ...state.messages[0].data];
+    },
+    resetMessages: (state) => {
+      state.isLoading = false;
+      state.messages = [];
+      state.isContinue = true;
+      state.err = false;
     },
   },
   extraReducers: {
@@ -32,12 +44,13 @@ const chatBodySlice = createSlice({
     },
     [getMessagesThunk.fulfilled.type]: (state, { payload }) => {
       state.isLoading = false;
+      state.isContinue = payload.isContinue;
       state.err = false;
-      state.messages = payload.messages;
+      state.messages.push({ id: Math.random(), data: payload.messages });
     },
     [getMessagesThunk.rejected.type]: (state, { payload }) => {
       state.isLoading = true;
-      state.messages = [];
+      state.isContinue = false;
       state.err = true;
     },
   },

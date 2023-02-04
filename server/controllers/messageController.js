@@ -2,13 +2,22 @@ import catchAsync from '../utils/catchAsync.js';
 import Message from '../models/messageSchema.js';
 
 export const getMessagesByConversation = catchAsync(async (req, res) => {
+  const limit = req.query.limit || 10;
+  const skip = req.query.skip;
+
   const messages = await Message.find({
     conversationId: req.params.conversationId,
-  }).limit(10);
+  })
+    .sort('-createdAt')
+    .skip(skip)
+    .limit(limit);
+
+  const length = messages.length;
 
   res.status(200).json({
     status: 'success',
-    data: { messages },
+    length,
+    data: { isContinue: !!length, messages },
   });
 });
 

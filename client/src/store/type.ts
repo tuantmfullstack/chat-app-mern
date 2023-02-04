@@ -54,8 +54,14 @@ export interface ChatBarStateI {
 
 export interface ChatBodyStateI {
   isLoading: boolean | null;
-  messages: MessageI[];
+  isContinue: boolean;
+  messages: General[];
   err: boolean | null;
+}
+
+export interface General {
+  id: number;
+  data: MessageI[];
 }
 
 export interface ChatFooterStateI {

@@ -9,3 +9,5 @@ export const conversationSelector = (state: RootState) =>
   state.chatBarSlice.conversation;
 export const userIdSelector = (state: RootState) => state.authSlice.id;
 export const userSelector = (state: RootState) => state.authSlice.user;
+export const isContinueSelector = (state: RootState) =>
+  state.chatBodySlice.isContinue;
