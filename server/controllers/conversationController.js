@@ -12,11 +12,11 @@ export const getAllConversations = catchAsync(async (req, res) => {
   })
     .populate({
       path: 'senderId',
-      select: 'email avatar',
+      select: 'email avatar name',
     })
     .populate({
       path: 'receiverId',
-      select: 'email avatar',
+      select: 'email avatar name',
     });
 
   res.status(200).json({

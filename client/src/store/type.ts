@@ -2,8 +2,8 @@ export interface ConversationI {
   _id: string;
   name: string;
   image: string;
-  senderId: { _id: string; email: string; avatar: string };
-  receiverId: { _id: string; email: string; avatar: string };
+  senderId: { _id: string; email: string; avatar: string; name: string };
+  receiverId: { _id: string; email: string; avatar: string; name: string };
   createdAt: Date;
 }
 
