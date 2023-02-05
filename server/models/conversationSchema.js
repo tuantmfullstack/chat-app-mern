@@ -18,6 +18,18 @@ const conversationSchema = new mongoose.Schema(
   }
 );
 
+conversationSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'senderId',
+    select: 'email avatar name',
+  }).populate({
+    path: 'receiverId',
+    select: 'email avatar name',
+  });
+
+  next();
+});
+
 const Conversation = mongoose.model('Conversation', conversationSchema);
 
 export default Conversation;

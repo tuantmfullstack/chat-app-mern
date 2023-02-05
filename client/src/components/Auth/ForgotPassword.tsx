@@ -15,7 +15,6 @@ const ForgotPassword = ({}: Props) => {
 
   const resetPasswordHandler = (e: FormEvent) => {
     e.preventDefault();
-    console.log({ email });
     dispatch(forgotPasswordThunk({ email, navigate }));
     setEmail('');
   };

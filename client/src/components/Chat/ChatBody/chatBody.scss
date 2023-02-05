@@ -35,3 +35,11 @@
   display: flex;
   flex-direction: column-reverse;
 }
+
+.no__conversation {
+  text-align: center;
+
+  & div {
+    margin-bottom: 12px;
+  }
+}

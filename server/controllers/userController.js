@@ -3,7 +3,8 @@ import catchAsync from '../utils/catchAsync.js';
 import User from '../models/userSchema.js';
 
 export const getAllUsers = catchAsync(async (req, res) => {
-  const users = await User.find();
+  const user = req.user;
+  const users = await User.find({ _id: { $ne: user._id } });
 
   res.status(200).json({
     status: 'success',

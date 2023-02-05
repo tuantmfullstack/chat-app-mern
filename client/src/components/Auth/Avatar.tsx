@@ -5,6 +5,7 @@ import { userSelector } from '../../store/selectors';
 import { useAppDispatch } from '../../store/store';
 import { updateAvatarThunk } from '../../store/authSlice';
 import { UserI } from '../../store/type';
+import { toast } from 'react-toastify';
 interface Props {}
 
 const url =
@@ -21,8 +22,10 @@ const Avatar = ({}: Props) => {
   const fileChangeHandler = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     const file = target.files![0];
-    setImg(file);
-    setImgUrl(URL.createObjectURL(file));
+    if (file?.type === 'image/jpeg') {
+      setImg(file);
+      setImgUrl(URL.createObjectURL(file));
+    } else toast.error('Invalid image file!');
   };
 
   useEffect(() => {

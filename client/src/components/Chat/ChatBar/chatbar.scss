@@ -1,3 +1,36 @@
 .chatbar {
   padding: 12px;
+
+  &__input {
+    padding: 8px 12px;
+    // width: 100%;
+    margin-bottom: 16px;
+    border: 0;
+    outline: 0;
+
+    &__wrapper {
+      position: relative;
+      transition: all ease 0.5s;
+      width: 100%;
+    }
+  }
+
+  &__users {
+    &__wrapper {
+      display: flex;
+      // background-color: #fff;
+      // padding: 12px;
+      gap: 12px;
+      align-items: center;
+
+      & img {
+        width: 30px;
+        height: 30px;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }

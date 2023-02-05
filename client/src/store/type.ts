@@ -47,6 +47,8 @@ export interface AuthUserI {
 
 export interface ChatBarStateI {
   isLoading: boolean | null;
+  isConversationCreated: boolean;
+  users: UserI[];
   conversations: ConversationI[];
   conversation: ConversationI | null;
   err: boolean | null;

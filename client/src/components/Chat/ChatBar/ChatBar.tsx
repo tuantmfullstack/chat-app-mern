@@ -11,6 +11,7 @@ import {
 import { ConversationI } from '../../../store/type';
 import { userIdSelector } from '../../../store/selectors';
 import { getUserInfoThunk } from '../../../store/authSlice';
+import FindingPerson from './FindingPerson';
 
 interface Props {}
 
@@ -37,6 +38,7 @@ const ChatBar = ({}: Props) => {
 
   return (
     <div className='chatbar'>
+      <FindingPerson />
       {conversations.map((con) => (
         <Conversation
           key={con._id}

@@ -12,10 +12,10 @@ const Home = ({}: Props) => {
         <div className='home__desc'>
           Sign up or login to have conversations with friends
         </div>
-        <Link to={'/login'}>
+        <Link to={'/login'} style={{ display: 'inline-block' }}>
           <button className='btn home__btn'>Login</button>
         </Link>
-        <Link to={'/signup'}>
+        <Link to={'/signup'} style={{ display: 'inline-block' }}>
           <button className='btn home__btn '>Sign up</button>
         </Link>
       </div>

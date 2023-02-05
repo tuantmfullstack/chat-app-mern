@@ -5,6 +5,7 @@ import { ConversationI } from '../../../store/type';
 import chatBodySlice from '../../../store/chatBodySlice';
 import { useSelector } from 'react-redux';
 import { userIdSelector } from '../../../store/selectors';
+import { useRef } from 'react';
 
 interface Props {
   name: string;
@@ -21,8 +22,6 @@ const Conversation = ({ name, img, conversation }: Props) => {
     dispatch(chatBodySlice.actions.resetMessages());
     dispatch(chatBarSlice.actions.changeConversation(conversation));
   };
-
-  console.log({ conversation });
 
   return (
     <div className='conversation' onClick={conversationHandler}>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getMessagesThunk } from '../../../store/chatBodySlice';
+import chatBodySlice, { getMessagesThunk } from '../../../store/chatBodySlice';
 import {
   conversationSelector,
   isContinueSelector,
@@ -12,8 +12,8 @@ import { ConversationI, General, MessageI } from '../../../store/type';
 import { socket } from '../Chat';
 import './chatBody.scss';
 import Message from './Message';
+import NoMessage from './NoMessage';
 import Spinner from './Spinner';
-import chatBodySlice from '../../../store/chatBodySlice';
 
 let num = 0;
 
@@ -36,6 +36,7 @@ const ChatBody = ({}: Props) => {
 
   useEffect(() => {
     if (conSelector !== null) {
+      dispatch(chatBodySlice.actions.resetMessages());
       setConversation({ ...conSelector! });
       num = 0;
     }
@@ -54,6 +55,7 @@ const ChatBody = ({}: Props) => {
   useEffect(() => {
     let observer = new IntersectionObserver(
       (entries: any) => {
+        console.log({ conversation });
         if (entries[0].isIntersecting && conversation && isContinue) {
           dispatch(
             getMessagesThunk({ conversationId: conversation._id, skip: num })
@@ -81,20 +83,26 @@ const ChatBody = ({}: Props) => {
     });
   }, []);
 
+  console.log({ messages });
+
   return (
     <div className='chatBody'>
-      {messages?.map((messageWrapper) => (
-        <div key={messageWrapper.id} className='reverse'>
-          {messageWrapper?.data?.map((message) => (
-            <Message
-              key={message._id}
-              senderId={message.senderId}
-              text={message.text}
-              createdAt={message.createdAt}
-            />
-          ))}
-        </div>
-      ))}
+      {messages && messages[0]?.data?.length > 0 ? (
+        messages?.map((messageWrapper) => (
+          <div key={messageWrapper.id} className='reverse'>
+            {messageWrapper?.data?.map((message) => (
+              <Message
+                key={message._id}
+                senderId={message.senderId}
+                text={message.text}
+                createdAt={message.createdAt}
+              />
+            ))}
+          </div>
+        ))
+      ) : (
+        <NoMessage time={conversation?.createdAt!} />
+      )}
       <button ref={buttonRef}>{isContinue ? <Spinner /> : ''}</button>
     </div>
   );
