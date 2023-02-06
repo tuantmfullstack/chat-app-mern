@@ -23,7 +23,6 @@ const Person = ({ _id, avatar, name, email }: Props) => {
 
   const userSelectHandler = () => {
     if (conSelector?._id !== _id) {
-      console.log(1);
       dispatch(chatBodySlice.actions.resetMessages());
       dispatch(getOrCreateConversationThunk({ receiverId: _id }));
     }

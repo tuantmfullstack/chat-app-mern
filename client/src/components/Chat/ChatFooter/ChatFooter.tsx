@@ -6,11 +6,15 @@ import { ConversationI, MessageClient } from '../../../store/type';
 import { useAppDispatch } from '../../../store/store';
 import { createMessage } from '../../../store/chatFooterSlice';
 import { socket } from '../Chat';
+import Picker from '@emoji-mart/react';
+import { ThumbsUp } from 'react-feather';
+import data from '@emoji-mart/data';
 
 interface Props {}
 
 const ChatFooter = ({}: Props) => {
   const [conversation, setConversation] = useState<ConversationI>();
+  const [show, setShow] = useState(false);
   const [input, setInput] = useState('');
   const conSelector = useSelector(conversationSelector);
   const currentUserId = useSelector(userIdSelector)!;
@@ -50,6 +54,10 @@ const ChatFooter = ({}: Props) => {
     setInput('');
   };
 
+  const showPickerHandler = () => {
+    setShow((prev) => !prev);
+  };
+
   return (
     <form className='chatFooter' onSubmit={sendMessageHandler}>
       <input
@@ -57,6 +65,10 @@ const ChatFooter = ({}: Props) => {
         onChange={inputChangeHandler}
         value={input}
       />
+      <div className='emoji__picker' onClick={showPickerHandler}>
+        <ThumbsUp fill='yellow' strokeWidth={2} />
+        {show && <Picker data={data} className='picker' />}
+      </div>
       <button className='btn send__btn'>Send</button>
     </form>
   );

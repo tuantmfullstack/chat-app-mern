@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  position: relative;
 
   & input {
     outline: 0;
@@ -27,4 +28,23 @@
   &:active {
     transform: scale(0.95);
   }
+}
+
+.emoji__picker {
+  position: absolute;
+  right: 13%;
+  top: 32%;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+// .picker {
+//   position: absolute;
+//   top: -100%;
+// }
+
+.em-emoji-picker {
+  position: absolute;
+  top: -100%;
+  margin-bottom: 12px;
 }

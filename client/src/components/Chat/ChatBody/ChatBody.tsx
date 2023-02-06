@@ -55,7 +55,6 @@ const ChatBody = ({}: Props) => {
   useEffect(() => {
     let observer = new IntersectionObserver(
       (entries: any) => {
-        console.log({ conversation });
         if (entries[0].isIntersecting && conversation && isContinue) {
           dispatch(
             getMessagesThunk({ conversationId: conversation._id, skip: num })
@@ -82,8 +81,6 @@ const ChatBody = ({}: Props) => {
       setArrivalMessage(message);
     });
   }, []);
-
-  console.log({ messages });
 
   return (
     <div className='chatBody'>
