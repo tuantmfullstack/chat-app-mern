@@ -1,14 +1,11 @@
-import './chatFooter.scss';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { conversationSelector, userIdSelector } from '../../../store/selectors';
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { ConversationI, MessageClient } from '../../../store/type';
-import { useAppDispatch } from '../../../store/store';
 import { createMessage } from '../../../store/chatFooterSlice';
+import { conversationSelector, userIdSelector } from '../../../store/selectors';
+import { useAppDispatch } from '../../../store/store';
+import { ConversationI, MessageClient } from '../../../store/type';
 import { socket } from '../Chat';
-import Picker from '@emoji-mart/react';
-import { ThumbsUp } from 'react-feather';
-import data from '@emoji-mart/data';
+import './chatFooter.scss';
 
 interface Props {}
 
@@ -65,10 +62,6 @@ const ChatFooter = ({}: Props) => {
         onChange={inputChangeHandler}
         value={input}
       />
-      <div className='emoji__picker' onClick={showPickerHandler}>
-        <ThumbsUp fill='yellow' strokeWidth={2} />
-        {show && <Picker data={data} className='picker' />}
-      </div>
       <button className='btn send__btn'>Send</button>
     </form>
   );
